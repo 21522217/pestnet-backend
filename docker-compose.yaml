@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: spring_postgres
+    restart: always
+    environment:
+      - 'POSTGRES_DB=PESTNETDB'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - "5433:5432"
+    volumes:
+      - "/c/Users/trong-khiem.SYSTEM-EXE/DEV/data/pestnet-data:/app/data"
