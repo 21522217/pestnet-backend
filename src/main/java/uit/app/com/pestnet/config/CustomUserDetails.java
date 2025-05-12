@@ -1,6 +1,7 @@
 package uit.app.com.pestnet.config;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,10 +10,10 @@ import uit.app.com.pestnet.model.User;
 import java.util.Collection;
 import java.util.Collections;
 
+@Setter
 @Getter
 public class CustomUserDetails implements UserDetails {
 
-    // Helper method to get the actual user entity
     private final User user;
 
     public CustomUserDetails(User user) {

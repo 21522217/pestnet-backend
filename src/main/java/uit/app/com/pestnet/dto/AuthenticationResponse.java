@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
     private String token;
     private String refreshToken;
+    @Builder.Default
+    private String tokenType = "Bearer";
+    private String username;
+    private String role;
 }
