@@ -10,4 +10,4 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - "/c/Users/trong-khiem.SYSTEM-EXE/DEV/data/pestnet-data:/app/data"
+      - "/d/source-code/spring-boot-projects/data:/app/data"

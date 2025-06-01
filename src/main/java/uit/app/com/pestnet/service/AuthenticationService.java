@@ -1,13 +1,13 @@
 package uit.app.com.pestnet.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uit.app.com.pestnet.dto.AuthenticationRequest;
-import uit.app.com.pestnet.dto.AuthenticationResponse;
-import uit.app.com.pestnet.dto.RegisterRequest;
+import uit.app.com.pestnet.dto.*;
+import uit.app.com.pestnet.exception.CustomException;
 import uit.app.com.pestnet.model.User;
 import uit.app.com.pestnet.repository.UserRepository;
 import uit.app.com.pestnet.config.CustomUserDetails;
@@ -22,6 +22,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new CustomException("Email has already been registered", HttpStatus.BAD_REQUEST);
+        }
+
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -40,6 +44,8 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
@@ -60,4 +66,27 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    public LoginResponse login(LoginRequest loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        var user = userRepository.findByEmailAndIsDeletedFalse(loginRequest.getEmail())
+                .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+
+        var jwtToken = jwtService.generateToken(new CustomUserDetails(user));
+        var refreshToken = jwtService.generateRefreshToken(new CustomUserDetails(user));
+
+        return LoginResponse.builder()
+                .token(jwtToken)
+                .refreshToken(refreshToken)
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
+    }
+
 }

@@ -11,4 +11,6 @@ public interface UserDetailService {
      * @throws UsernameNotFoundException if the user is not found
      */
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+
 }
