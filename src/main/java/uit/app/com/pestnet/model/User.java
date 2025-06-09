@@ -38,7 +38,7 @@ public class User {
 
  @Builder.Default
  @Column(name = "is_deleted", nullable = false)
- private boolean isDeleted = false;
+ private boolean deleted = false;
 
  @Column(name = "created_at", updatable = false)
  @CreationTimestamp

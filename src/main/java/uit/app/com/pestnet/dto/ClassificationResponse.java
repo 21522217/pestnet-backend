@@ -24,7 +24,6 @@ public class ClassificationResponse {
     private List<String> pestRegions;
     private String pestScientificName;
     private String pestDescription;
-    private String pestImageUrl;
     private String pestUrl;
     private List<String> pestInsecticide;
 }

@@ -24,7 +24,7 @@ public class ClassificationServiceImpl implements ClassificationService {
     @Override
     public ClassificationResponse createClassification(ClassificationRequest request) {
         Image image = Image.builder()
-                .imageUrl(request.getImageUrl())
+                .imageUrl(request.getPestUrl())
                 .uploadedAt(LocalDateTime.now())
                 .originalName("default.jpg")
                 .isDeleted(false)
@@ -59,7 +59,6 @@ public class ClassificationServiceImpl implements ClassificationService {
                 .pestRegions(pest.getRegions())
                 .pestScientificName(pest.getScientificName())
                 .pestDescription(pest.getDescription())
-                .pestImageUrl(pest.getImageUrl())
                 .pestUrl(pest.getPestUrl())
                 .pestInsecticide(pest.getPestInsecticide())
                 .build();

@@ -31,7 +31,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .role("USER")
-                .isDeleted(false)
+                .deleted(false)
                 .build();
 
         userRepository.save(user);
@@ -55,7 +55,7 @@ public class AuthenticationService {
                 )
         );
 
-        var user = userRepository.findByUsernameAndIsDeletedFalse(request.getUsername())
+        var user = userRepository.findByEmailAndDeletedFalse(request.getUsername())
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(new CustomUserDetails(user));
@@ -75,7 +75,7 @@ public class AuthenticationService {
                 )
         );
 
-        var user = userRepository.findByEmailAndIsDeletedFalse(loginRequest.getEmail())
+        var user = userRepository.findByEmailAndDeletedFalse(loginRequest.getEmail())
                 .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
 
         var jwtToken = jwtService.generateToken(new CustomUserDetails(user));
@@ -84,6 +84,7 @@ public class AuthenticationService {
         return LoginResponse.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
+                .userId(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .build();

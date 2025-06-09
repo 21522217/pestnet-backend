@@ -1,23 +1,28 @@
 package uit.app.com.pestnet.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import uit.app.com.pestnet.dto.UserRequestDTO;
 import uit.app.com.pestnet.dto.UserResponseDTO;
 import uit.app.com.pestnet.model.User;
 
-/**
- * @author trong-khiem
- */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    // Convert from request DTO to Entity (no password hashing here)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "passwordHash", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     User toEntity(UserRequestDTO dto);
 
-    // Convert from Entity to Response DTO
     UserResponseDTO toResponseDTO(User user);
 
-    // Optional: Update existing entity with DTO fields (e.g. for PATCH)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "passwordHash", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     void updateEntityFromDto(UserRequestDTO dto, @MappingTarget User user);
 }

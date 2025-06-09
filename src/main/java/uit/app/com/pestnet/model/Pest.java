@@ -43,9 +43,6 @@ public class Pest {
     @Column(name = "harm_level")
     private String harmLevel;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
-    private String imageUrl;
-
     @Column(name = "pest_url", columnDefinition = "TEXT", nullable = false)
     private String pestUrl = "https://www.inaturalist.org/taxa/52045-Cnaphalocrocis-medinalis";
 
@@ -54,6 +51,10 @@ public class Pest {
     @Column(name = "insecticide")
     private List<String> pestInsecticide;
 
+    @ElementCollection
+    @CollectionTable(name = "related_images")
+    private List<String> relatedImages = List.of();
+
     @Column(name = "is_deleted", nullable = false)
-    private Boolean deleted = false;
+    private boolean deleted = false;
 }

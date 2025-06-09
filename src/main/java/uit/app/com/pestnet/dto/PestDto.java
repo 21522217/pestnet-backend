@@ -15,8 +15,8 @@ public class PestDto {
     private String biologicalCharacteristics;
     private String controlMethods;
     private String harmLevel;
-    private String imageUrl;
     private String pestUrl;
     private List<String> pestInsecticide;
-    private Boolean deleted;
+    private List<String> relatedImages;
+    private boolean deleted;
 }

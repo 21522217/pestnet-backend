@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClassificationRequest {
-    private String imageUrl;
+    private String pestUrl;
     private String pestName;
     private float confidence;
     private String modelName;
