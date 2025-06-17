@@ -10,5 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface ClassificationRepository extends JpaRepository<Classification, UUID> {
-
+    List<Classification> findByImage_User_IdAndImage_IsDeletedFalseOrderByClassifiedAtDesc(UUID userId);
+    List<Classification> findByImage_User_IdAndImage_IsDeletedFalseOrderByConfidenceDesc(UUID userId);
 }

@@ -11,11 +11,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassificationRequest {
-    private String pestUrl;
-    private String scientificName;
-    private float confidence;
-    private String modelName;
+public class ClassificationCreateRequest {
     private String imageUrl;
     private String originalName;
+    private UUID pestId;
+    private float confidence;
+    private UUID modelId;
 }

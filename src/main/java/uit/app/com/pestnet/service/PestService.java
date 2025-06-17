@@ -17,4 +17,6 @@ public interface PestService {
 
     PestDto updatePest(UUID id, PestDto dto);
     void deletePest(UUID id);
+
+    PestDto incrementOccurrenceCount(String scientificName);
 }

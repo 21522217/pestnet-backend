@@ -96,15 +96,15 @@ public class PestServiceImpl implements PestService {
                 .orElseThrow(() -> new NotFoundException("Pest not found with ID: " + id));
 
         try {
-            pest.setName(dto.getName());
-            pest.setRegions(dto.getRegions());
-            pest.setScientificName(dto.getScientificName());
-            pest.setDescription(dto.getDescription());
-            pest.setBiologicalCharacteristics(dto.getBiologicalCharacteristics());
-            pest.setControlMethods(dto.getControlMethods());
-            pest.setHarmLevel(dto.getHarmLevel());
-            pest.setPestUrl(dto.getPestUrl());
-            pest.setPestInsecticide(dto.getPestInsecticide());
+            if (dto.getName() != null) pest.setName(dto.getName());
+            if (dto.getRegions() != null) pest.setRegions(dto.getRegions());
+            if (dto.getScientificName() != null) pest.setScientificName(dto.getScientificName());
+            if (dto.getDescription() != null) pest.setDescription(dto.getDescription());
+            if (dto.getBiologicalCharacteristics() != null) pest.setBiologicalCharacteristics(dto.getBiologicalCharacteristics());
+            if (dto.getControlMethods() != null) pest.setControlMethods(dto.getControlMethods());
+            if (dto.getHarmLevel() != null) pest.setHarmLevel(dto.getHarmLevel());
+            if (dto.getPestUrl() != null) pest.setPestUrl(dto.getPestUrl());
+            if (dto.getPestInsecticide() != null) pest.setPestInsecticide(dto.getPestInsecticide());
 
             return pestMapper.toDto(pestRepository.save(pest));
         } catch (Exception e) {
@@ -123,5 +123,18 @@ public class PestServiceImpl implements PestService {
 
         pest.setDeleted(true);
         pestRepository.save(pest);
+    }
+
+    @Override
+    @Transactional
+    public PestDto incrementOccurrenceCount(String scientificName) {
+        Pest pest = pestRepository.findByScientificNameIgnoreCaseAndDeletedFalse(scientificName)
+                .orElseThrow(() -> new NotFoundException("Pest not found"));
+
+        Integer currentCount = pest.getOccurrenceCount() != null ? pest.getOccurrenceCount() : 0;
+        pest.setOccurrenceCount(currentCount + 1);
+
+        Pest updated = pestRepository.save(pest);
+        return pestMapper.toDto(updated);
     }
 }

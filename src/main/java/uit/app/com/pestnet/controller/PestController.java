@@ -77,4 +77,16 @@ public class PestController {
         pestService.deletePest(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{scientificName}/increment-occurrence")
+    public ResponseEntity<ApiResponse<PestDto>> incrementOccurrenceCount(@PathVariable String scientificName) {
+        PestDto updated = pestService.incrementOccurrenceCount(scientificName);
+        return ResponseEntity.ok(
+                ApiResponseUtil.success(
+                        updated,
+                        "Pest occurrence count incremented successfully",
+                        HttpStatus.OK
+                )
+        );
+    }
 }

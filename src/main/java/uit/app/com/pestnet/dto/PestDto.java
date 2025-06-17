@@ -16,6 +16,7 @@ public class PestDto {
     private String controlMethods;
     private String harmLevel;
     private String pestUrl;
+    private Integer occurrenceCount;
     private List<String> pestInsecticide;
     private List<String> relatedImages;
     private boolean deleted;

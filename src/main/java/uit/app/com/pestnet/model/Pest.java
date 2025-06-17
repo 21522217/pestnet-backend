@@ -3,6 +3,7 @@ package uit.app.com.pestnet.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.id.IntegralDataTypeHolder;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +43,9 @@ public class Pest {
 
     @Column(name = "harm_level")
     private String harmLevel;
+
+    @Column(name = "occurrence_count")
+    private Integer occurrenceCount;
 
     @Column(name = "pest_url", columnDefinition = "TEXT", nullable = false)
     private String pestUrl = "https://www.inaturalist.org/taxa/52045-Cnaphalocrocis-medinalis";
